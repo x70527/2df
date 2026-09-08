@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>2df — Reference Lab</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#111;color:#eee;font-family:system-ui,sans-serif}
+#app{max-width:900px;margin:auto;padding:12px}.panel{background:#1b1b1b;border:1px solid #333;border-radius:12px;padding:12px;margin-bottom:12px}
+h1{font-size:20px;margin:0 0 8px}p{margin:6px 0;color:#bbb;font-size:14px}
+#stage{position:relative;width:100%;aspect-ratio:1;background:#080808;overflow:hidden;border-radius:10px}
+#ref,#trace{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#trace{pointer-events:none}.controls{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-top:10px}
+label{font-size:14px}input[type=range]{width:100%}button{padding:10px 12px;border:0;border-radius:8px;background:#333;color:white}
+.hidden{display:none!important}video{width:100%;border-radius:10px;background:#000}
+</style>
+</head>
+<body><main id="app">
+<section class="panel"><h1>2df Reference Lab — Prototype</h1>
+<p>This tool is the first reconstruction workspace. The PNG is displayed as the canonical static reference. A procedural overlay can be added later and compared directly.</p>
+<div id="stage">
+<img id="ref" src="SI_86343F68-B918-496A-8BA4-D5D6AD2F492C.png" alt="Character lower-body reference">
+<canvas id="trace"></canvas>
+</div>
+<div class="controls"><label for="opacity">Reference opacity</label><output id="opacityOut">100%</output><input id="opacity" type="range" min="0" max="100" value="100"><span></span></div>
+<div class="controls"><label>Overlay</label><button id="toggle">Show analysis guides</button></div>
+</section>
+<section class="panel"><h1>Animation Reference</h1>
+<p>The original MOV is preserved and loaded directly from the repository. This will later be paired with frame landmarks and comparison tools.</p>
+<video id="video" controls playsinline preload="metadata"><source src="AQNw4SATRLRJG97Fc7nhIg-V1D4MjAF0WeSYWSdlDcF8S0wJUL1oqUEqrG63xwuhVQA537MuMeOmoiCwbi7yO6MLXN-FPbBMRABhFsE.mov" type="video/quicktime"></video>
+</section></main>
+<script>
+const ref=document.getElementById('ref'), canvas=document.getElementById('trace'), ctx=canvas.getContext('2d');
+const opacity=document.getElementById('opacity'), out=document.getElementById('opacityOut');
+opacity.oninput=()=>{ref.style.opacity=opacity.value/100;out.textContent=opacity.value+'%'};
+let guides=false;document.getElementById('toggle').onclick=()=>{guides=!guides;draw()};
+function resize(){const r=canvas.getBoundingClientRect();canvas.width=Math.round(r.width*devicePixelRatio);canvas.height=Math.round(r.height*devicePixelRatio);draw()}
+function draw(){ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);const r=canvas.getBoundingClientRect();ctx.clearRect(0,0,r.width,r.height);if(!guides)return;ctx.strokeStyle='rgba(0,255,255,.65)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(r.width/2,0);ctx.lineTo(r.width/2,r.height);ctx.moveTo(0,r.height/2);ctx.lineTo(r.width,r.height/2);ctx.stroke();ctx.fillStyle='rgba(0,255,255,.8)';for(let x=0;x<=r.width;x+=r.width/8){for(let y=0;y<=r.height;y+=r.height/8){ctx.fillRect(x-1,y-1,2,2)}}}
+new ResizeObserver(resize).observe(canvas);resize();
+</script></body></html>
