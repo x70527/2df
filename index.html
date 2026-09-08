@@ -1,30 +1,45 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>2df Reference Lab</title>
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#101010;color:#eee;font-family:system-ui,sans-serif}#app{max-width:900px;margin:auto;padding:12px}.panel{background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:12px;margin-bottom:12px}h1{font-size:20px;margin:0 0 8px}h2{font-size:16px;margin:0 0 6px}p{margin:6px 0;color:#bbb;font-size:14px}.stage{position:relative;width:100%;aspect-ratio:1;background:#080808;overflow:hidden;border-radius:10px;touch-action:none}.stage>*{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.controls{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:10px}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}button,select{padding:10px 12px;border:0;border-radius:8px;background:#333;color:#fff;font:inherit}input[type=range]{width:100%}video{width:100%;border-radius:10px;background:#000}.hint{font-size:12px;color:#999}.active{outline:2px solid #7dd}
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#101010;color:#eee;font-family:system-ui,sans-serif}#app{max-width:900px;margin:auto;padding:12px}.panel{background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:12px;margin-bottom:12px}h1{font-size:20px;margin:0 0 8px}h2{font-size:16px;margin:0 0 6px}p{margin:6px 0;color:#bbb;font-size:14px}.stage{position:relative;width:100%;aspect-ratio:1;background:#080808;overflow:hidden;border-radius:10px;touch-action:none}.stage>*{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.controls{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:10px}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}button,select{padding:10px 12px;border:0;border-radius:8px;background:#333;color:#fff;font:inherit}input[type=range]{width:100%}video{width:100%;border-radius:10px;background:#000}.hint{font-size:12px;color:#999}.active{outline:2px solid #7dd}output{font-variant-numeric:tabular-nums}
 </style></head><body><main id="app">
-<section class="panel"><h1>2df Reference Lab</h1><p>Source-driven tracing workspace. Tap the image to place landmarks; landmarks are stored in normalized coordinates so they survive resizing.</p>
+<section class="panel"><h1>2df Reference Lab</h1><p>Static source workspace. Landmark data is normalized to the source image.</p>
 <div id="stage" class="stage"><img id="ref" src="SI_86343F68-B918-496A-8BA4-D5D6AD2F492C.png"><canvas id="overlay"></canvas></div>
 <div class="controls"><label for="opacity">Reference opacity</label><output id="opacityOut">100%</output><input id="opacity" type="range" min="10" max="100" value="100"><span></span></div>
 <div class="row"><button id="guides">Guides</button><button id="landmarkMode">Place landmarks</button><button id="undo">Undo</button><button id="clear">Clear</button></div>
-<div class="row"><select id="part"><option value="unassigned">Unassigned</option><option value="leftFoot">Left foot</option><option value="rightFoot">Right foot</option><option value="leftToe">Left toe</option><option value="rightToe">Right toe</option><option value="leftAnkle">Left ankle</option><option value="rightAnkle">Right ankle</option></select><button id="export">Copy landmarks JSON</button></div>
-<p class="hint">This is an analysis tool, not yet the final replica. Its purpose is to record measurable source points before rigging or approximation.</p>
+<div class="row"><select id="part"><option value="unassigned">Unassigned</option><option value="leftFoot">Left foot</option><option value="rightFoot">Right foot</option><option value="leftToe">Left toe</option><option value="rightToe">Right toe</option><option value="leftAnkle">Left ankle</option><option value="rightAnkle">Right ankle</option></select><button id="export">Copy static JSON</button></div>
 </section>
-<section class="panel"><h2>Animation Reference</h2><p>Original MOV preserved as motion evidence.</p><video id="video" controls playsinline preload="metadata"><source src="AQNw4SATRLRJG97Fc7nhIg-V1D4MjAF0WeSYWSdlDcF8S0wJUL1oqUEqrG63xwuhVQA537MuMeOmoiCwbi7yO6MLXN-FPbBMRABhFsE.mov" type="video/quicktime"></video></section>
+<section class="panel"><h2>Animation Frame Lab</h2><p>Pause, scrub, and inspect individual video frames. The selected frame is copied to a canvas so it can later be compared with reconstructed motion.</p>
+<div id="videoStage" class="stage"><video id="video" playsinline preload="metadata"><source src="AQNw4SATRLRJG97Fc7nhIg-V1D4MjAF0WeSYWSdlDcF8S0wJUL1oqUEqrG63xwuhVQA537MuMeOmoiCwbi7yO6MLXN-FPbBMRABhFsE.mov" type="video/quicktime"></video><canvas id="videoOverlay"></canvas></div>
+<div class="row"><button id="play">Play</button><button id="back">−1 frame</button><button id="forward">+1 frame</button><button id="capture">Capture frame</button></div>
+<div class="controls"><label for="scrub">Video position</label><output id="timeOut">0.000 s</output><input id="scrub" type="range" min="0" max="1" step="0.001" value="0"><span></span></div>
+<div class="row"><button id="videoGuides">Video guides</button><button id="videoLandmarks">Place frame landmarks</button><button id="frameUndo">Undo</button><button id="frameClear">Clear frame</button></div>
+<div class="row"><select id="videoPart"><option value="unassigned">Unassigned</option><option value="leftFoot">Left foot</option><option value="rightFoot">Right foot</option><option value="leftBigToe">Left big toe</option><option value="leftToe2">Left toe 2</option><option value="leftToe3">Left toe 3</option><option value="leftToe4">Left toe 4</option><option value="leftToe5">Left toe 5</option><option value="rightBigToe">Right big toe</option><option value="rightToe2">Right toe 2</option><option value="rightToe3">Right toe 3</option><option value="rightToe4">Right toe 4</option><option value="rightToe5">Right toe 5</option></select><button id="frameExport">Copy motion JSON</button></div>
+<p class="hint">Frame step uses the observed source rate of 30 FPS. Captured landmarks are keyed by video time.</p>
+</section>
 </main><script>
-const stage=document.getElementById('stage'),ref=document.getElementById('ref'),c=document.getElementById('overlay'),ctx=c.getContext('2d');
-const opacity=document.getElementById('opacity'),out=document.getElementById('opacityOut'),part=document.getElementById('part');
-let guides=false,placing=false,points=[];
-opacity.oninput=()=>{ref.style.opacity=opacity.value/100;out.textContent=opacity.value+'%'};
-document.getElementById('guides').onclick=e=>{guides=!guides;e.currentTarget.classList.toggle('active',guides);draw()};
-document.getElementById('landmarkMode').onclick=e=>{placing=!placing;e.currentTarget.classList.toggle('active',placing);draw()};
-document.getElementById('undo').onclick=()=>{points.pop();draw()};
-document.getElementById('clear').onclick=()=>{if(confirm('Clear all landmarks?')){points=[];draw()}};
-document.getElementById('export').onclick=async()=>{const data=JSON.stringify({image:{width:1536,height:1536},landmarks:points},null,2);try{await navigator.clipboard.writeText(data);alert('Landmarks copied.')}catch{prompt('Copy this JSON:',data)}};
-stage.addEventListener('pointerdown',e=>{if(!placing)return;const r=stage.getBoundingClientRect();points.push({part:part.value,x:+((e.clientX-r.left)/r.width).toFixed(6),y:+((e.clientY-r.top)/r.height).toFixed(6)});draw()});
-function resize(){const r=stage.getBoundingClientRect(),d=devicePixelRatio;c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);c.style.width=r.width+'px';c.style.height=r.height+'px';draw()}
-function draw(){const r=stage.getBoundingClientRect(),d=devicePixelRatio;ctx.setTransform(d,0,0,d,0,0);ctx.clearRect(0,0,r.width,r.height);
-if(guides){ctx.strokeStyle='rgba(0,255,255,.45)';ctx.lineWidth=1;ctx.beginPath();for(let i=1;i<8;i++){let x=r.width*i/8,y=r.height*i/8;ctx.moveTo(x,0);ctx.lineTo(x,r.height);ctx.moveTo(0,y);ctx.lineTo(r.width,y)}ctx.stroke();ctx.beginPath();ctx.moveTo(r.width/2,0);ctx.lineTo(r.width/2,r.height);ctx.stroke()}
-points.forEach((p,i)=>{let x=p.x*r.width,y=p.y*r.height;ctx.fillStyle='rgba(255,215,0,.95)';ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#111';ctx.font='11px system-ui';ctx.fillText(i+1,x+7,y-7)})}
-new ResizeObserver(resize).observe(stage);resize();
+function setupLandmarks(stageId,canvasId,partId){
+ const stage=document.getElementById(stageId),c=document.getElementById(canvasId),ctx=c.getContext('2d'),part=document.getElementById(partId);let guides=false,placing=false,points=[];
+ function resize(){const r=stage.getBoundingClientRect(),d=devicePixelRatio;c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);draw()}
+ function draw(){const r=stage.getBoundingClientRect(),d=devicePixelRatio;ctx.setTransform(d,0,0,d,0,0);ctx.clearRect(0,0,r.width,r.height);if(guides){ctx.strokeStyle='rgba(0,255,255,.45)';ctx.lineWidth=1;ctx.beginPath();for(let i=1;i<8;i++){let x=r.width*i/8,y=r.height*i/8;ctx.moveTo(x,0);ctx.lineTo(x,r.height);ctx.moveTo(0,y);ctx.lineTo(r.width,y)}ctx.stroke();ctx.beginPath();ctx.moveTo(r.width/2,0);ctx.lineTo(r.width/2,r.height);ctx.stroke()}points.forEach((p,i)=>{let x=p.x*r.width,y=p.y*r.height;ctx.fillStyle='rgba(255,215,0,.95)';ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#111';ctx.font='11px system-ui';ctx.fillText(i+1,x+7,y-7)})}
+ stage.addEventListener('pointerdown',e=>{if(!placing)return;const r=stage.getBoundingClientRect();points.push({part:part.value,x:+((e.clientX-r.left)/r.width).toFixed(6),y:+((e.clientY-r.top)/r.height).toFixed(6)});draw()});
+ new ResizeObserver(resize).observe(stage);resize();
+ return {toggleGuides:b=>{guides=!guides;b.classList.toggle('active',guides);draw()},togglePlacing:b=>{placing=!placing;b.classList.toggle('active',placing)},undo:()=>{points.pop();draw()},clear:()=>{points=[];draw()},get:()=>points};
+}
+const staticLab=setupLandmarks('stage','overlay','part');
+const ref=document.getElementById('ref'),opacity=document.getElementById('opacity'),opacityOut=document.getElementById('opacityOut');
+opacity.oninput=()=>{ref.style.opacity=opacity.value/100;opacityOut.textContent=opacity.value+'%'};
+guides.onclick=()=>staticLab.toggleGuides(guides);landmarkMode.onclick=()=>staticLab.togglePlacing(landmarkMode);undo.onclick=staticLab.undo;clear.onclick=()=>{if(confirm('Clear all static landmarks?'))staticLab.clear()};
+export.onclick=async()=>copy({image:{width:1536,height:1536},landmarks:staticLab.get()},'Static landmarks copied.');
+const motionLab=setupLandmarks('videoStage','videoOverlay','videoPart'),video=document.getElementById('video'),scrub=document.getElementById('scrub'),timeOut=document.getElementById('timeOut');
+let captured=[];
+video.onloadedmetadata=()=>{scrub.max=video.duration;timeOut.textContent='0.000 s'};
+video.ontimeupdate=()=>{scrub.value=video.currentTime;timeOut.textContent=video.currentTime.toFixed(3)+' s'};
+scrub.oninput=()=>{video.pause();video.currentTime=+scrub.value};
+play.onclick=()=>video.paused?video.play():video.pause();video.onplay=()=>play.textContent='Pause';video.onpause=()=>play.textContent='Play';
+const step=()=>1/30;back.onclick=()=>{video.pause();video.currentTime=Math.max(0,video.currentTime-step())};forward.onclick=()=>{video.pause();video.currentTime=Math.min(video.duration,video.currentTime+step())};
+capture.onclick=()=>{captured.push({time:+video.currentTime.toFixed(6),landmarks:[...motionLab.get()]});motionLab.clear();alert('Frame captured at '+video.currentTime.toFixed(3)+' s')};
+videoGuides.onclick=()=>motionLab.toggleGuides(videoGuides);videoLandmarks.onclick=()=>motionLab.togglePlacing(videoLandmarks);frameUndo.onclick=motionLab.undo;frameClear.onclick=()=>motionLab.clear();
+frameExport.onclick=async()=>copy({fps:30,frames:captured,current:{time:+video.currentTime.toFixed(6),landmarks:motionLab.get()}},'Motion data copied.');
+async function copy(data,msg){const s=JSON.stringify(data,null,2);try{await navigator.clipboard.writeText(s);alert(msg)}catch{prompt('Copy this JSON:',s)}}
 </script></body></html>
