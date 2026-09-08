@@ -1,30 +1,29 @@
 # PROJECT STATE
 
 ## Project
-Reverse-engineered 2D procedural scene reconstruction.
+Source-driven reconstruction of a specific 2D animated scene. Separate from the 3D foot project.
 
-## Goal
-Reconstruct the specific supplied animated scene as closely as the available reference evidence allows. Observed character shapes and motion are to be matched from source material rather than replaced with generic approximations.
-
-## Scope
-This is a separate side project. It must not replace or alter the main 3D foot-rig/WebGL project.
-
-## Reference sources
-- Original MOV animation in the repository.
-- High-resolution lower-body PNG in the repository.
+## Source assets
+- Original MOV animation in repository root.
+- High-resolution lower-body PNG in repository root.
 
 ## Implemented
-- Runnable `index.html` reference lab.
-- Static PNG viewer with opacity control and normalized landmarks.
-- Frame-by-frame MOV analysis controls and per-toe landmark categories.
-- Source-driven reconstruction component model in `src/reconstruction.js`.
-- GitHub Pages enabled for future browser testing.
+- `index.html`: static reference and frame-analysis lab.
+- `trace.html`: component boundary tracing editor.
+  - normalized coordinates
+  - local persistence on the device
+  - per-component paths
+  - JSON export/import
+- `data/character-trace.json`: canonical destination for committed trace data.
+- `viewer.html`: renders imported source-derived traces over or without the reference.
+- `src/reconstruction.js`: component data model.
+- GitHub Pages enabled.
 
-## Reconstruction rule
-No generic replacement character geometry is canonical. Geometry must be derived from source tracing or measurement.
+## Current rule
+Do not invent canonical character geometry. Empty trace data is preferable to falsely precise approximations.
 
 ## Current task
-Populate measured component traces from the reference image, beginning with foot and toe silhouettes, then render those traces as the first reconstruction layer.
+Acquire actual source traces, commit them to `data/character-trace.json`, then build the runtime reconstruction and animation layer.
 
 ## Next milestone
-Render editable source-derived paths over the reference image and begin component-by-component tracing.
+The trace editor should produce the first real component data. Once committed, the viewer/runtime can render independent foot and toe shapes and establish pivots for observed motion.
