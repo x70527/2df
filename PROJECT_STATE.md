@@ -10,28 +10,21 @@ Reconstruct the specific supplied animated scene as closely as the available ref
 This is a separate side project. It must not replace or alter the main 3D foot-rig/WebGL project.
 
 ## Reference sources
-- `AQNw4SATRLRJG97Fc7nhIg-V1D4MjAF0WeSYWSdlDcF8S0wJUL1oqUEqrG63xwuhVQA537MuMeOmoiCwbi7yO6MLXN-FPbBMRABhFsE.mov` — original animation reference.
-- `SI_86343F68-B918-496A-8BA4-D5D6AD2F492C.png` — high-resolution lower-body character reference.
-
-## Current stage
-Initial runnable reference-analysis prototype created.
+- Original MOV animation in the repository.
+- High-resolution lower-body PNG in the repository.
 
 ## Implemented
-- `index.html` loads both original repository assets.
-- Static PNG reference viewer with opacity control.
-- Canvas analysis-guide overlay.
-- Original animation video player.
-- No character geometry has yet been approximated or substituted.
+- Runnable `index.html` reference lab.
+- Static PNG viewer with opacity control and normalized landmarks.
+- Frame-by-frame MOV analysis controls and per-toe landmark categories.
+- Source-driven reconstruction component model in `src/reconstruction.js`.
+- GitHub Pages enabled for future browser testing.
 
-## Critical requirements
-- Preserve original reference assets unchanged.
-- Separate static shape reconstruction from motion reconstruction.
-- Validate against references before adding complex procedural animation.
-- Do not silently invent unobserved geometry or motion.
-- Optimize the eventual application for iPhone 15 Pro Max and Safari.
+## Reconstruction rule
+No generic replacement character geometry is canonical. Geometry must be derived from source tracing or measurement.
 
 ## Current task
-Analyze the supplied references and replace the placeholder analysis overlay with source-driven reconstruction geometry.
+Populate measured component traces from the reference image, beginning with foot and toe silhouettes, then render those traces as the first reconstruction layer.
 
 ## Next milestone
-Establish trace/component boundaries for the lower body and feet, then build the first reconstructed geometry layer.
+Render editable source-derived paths over the reference image and begin component-by-component tracing.
