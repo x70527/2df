@@ -10,11 +10,18 @@ Reconstruct the specific supplied animated scene as closely as the available ref
 This is a separate side project. It must not replace or alter the main 3D foot-rig/WebGL project.
 
 ## Reference sources
-- Original animation video supplied in the conversation.
-- High-resolution lower-body character reference supplied in the conversation.
+- `AQNw4SATRLRJG97Fc7nhIg-V1D4MjAF0WeSYWSdlDcF8S0wJUL1oqUEqrG63xwuhVQA537MuMeOmoiCwbi7yO6MLXN-FPbBMRABhFsE.mov` — original animation reference.
+- `SI_86343F68-B918-496A-8BA4-D5D6AD2F492C.png` — high-resolution lower-body character reference.
 
 ## Current stage
-Repository initialization and reference-analysis preparation.
+Initial runnable reference-analysis prototype created.
+
+## Implemented
+- `index.html` loads both original repository assets.
+- Static PNG reference viewer with opacity control.
+- Canvas analysis-guide overlay.
+- Original animation video player.
+- No character geometry has yet been approximated or substituted.
 
 ## Critical requirements
 - Preserve original reference assets unchanged.
@@ -24,7 +31,7 @@ Repository initialization and reference-analysis preparation.
 - Optimize the eventual application for iPhone 15 Pro Max and Safari.
 
 ## Current task
-Prepare the repository and then ingest/reference the supplied source assets for systematic analysis.
+Analyze the supplied references and replace the placeholder analysis overlay with source-driven reconstruction geometry.
 
 ## Next milestone
-Build a reference-analysis workflow before building the final animated scene.
+Establish trace/component boundaries for the lower body and feet, then build the first reconstructed geometry layer.
